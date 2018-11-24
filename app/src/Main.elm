@@ -157,7 +157,7 @@ todoItemView : TaskItem -> Html Msg
 todoItemView { isCompleted, content } =
     li [ class "completed" ]
         [ div [ class "view" ]
-            [ input [ class "toggle", type_ "checkbox", checked True ] []
+            [ input [ class "toggle", type_ "checkbox" ] []
             , label [] [ text "" ]
             , button [ class "destroy" ] []
             ]

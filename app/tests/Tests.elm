@@ -75,17 +75,23 @@ suite =
                     taskItem =
                         TaskItem False "new todo"
                 in
-                [ test "liは 'completed' class を持っている" <|
+                [ test "liは 'completed' class を持つ" <|
                     \_ ->
                         todoItemView taskItem
                             |> Query.fromHtml
                             |> Query.has [ Selector.class "completed" ]
-                , test "input.toggleは 'checked' を持っている" <|
+                , test "input.toggleは 'checked' を持たない" <|
                     \_ ->
                         todoItemView taskItem
                             |> Query.fromHtml
                             |> Query.find [ Selector.tag "input", Selector.class "toggle" ]
-                            |> Query.has [ Selector.checked True ]
+                            |> Query.hasNot [ Selector.checked True ]
+                , test "labelのTextは 'new todo' を持つ" <|
+                    \_ ->
+                        todoItemView taskItem
+                            |> Query.fromHtml
+                            |> Query.find [ Selector.tag "label" ]
+                            |> Query.has [ Selector.text "new todo" ]
                 ]
             ]
         ]
