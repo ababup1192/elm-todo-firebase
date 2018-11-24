@@ -191,8 +191,8 @@ todoItemView taskItem =
 
 todoItemListView : List TaskItem -> Html Msg
 todoItemListView taskItemList =
-    ul [ class "todo-list" ] <|
-        []
+    ul [ class "todo-list" ]
+        (taskItemList |> List.reverse |> List.map todoItemView)
 
 
 subscriptions : Model -> Sub Msg

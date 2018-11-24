@@ -137,7 +137,7 @@ suite =
 
                     secondTaskLabel =
                         taskItemListHtml
-                            |> Query.index 0
+                            |> Query.index 1
                             |> Query.find [ Selector.tag "label" ]
                 in
                 [ test "最初に表示されるアイテムは、'Teste JavaScript' である" <|
