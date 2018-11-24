@@ -33,6 +33,7 @@ public class BasicStepDefs {
 
     @When("^エンターキーを押すと$")
     public void エンターキーを押すと() throws Throwable {
+        Thread.sleep(1000);
         final WebElement newTodoInput = driver.switchTo().activeElement();
         newTodoInput.sendKeys(Keys.ENTER);
     }
