@@ -93,5 +93,28 @@ suite =
                             |> Query.find [ Selector.tag "label" ]
                             |> Query.has [ Selector.text "new todo" ]
                 ]
+            , describe "完了している 'old todo' タスクがあるとき" <|
+                let
+                    taskItem =
+                        TaskItem True "old todo"
+                in
+                [ test "liは 'completed' class を持たない" <|
+                    \_ ->
+                        todoItemView taskItem
+                            |> Query.fromHtml
+                            |> Query.hasNot [ Selector.class "completed" ]
+                , test "input.toggleは 'checked' を持つ" <|
+                    \_ ->
+                        todoItemView taskItem
+                            |> Query.fromHtml
+                            |> Query.find [ Selector.tag "input", Selector.class "toggle" ]
+                            |> Query.has [ Selector.checked True ]
+                , test "labelのTextは 'old todo' を持つ" <|
+                    \_ ->
+                        todoItemView taskItem
+                            |> Query.fromHtml
+                            |> Query.find [ Selector.tag "label" ]
+                            |> Query.has [ Selector.text "old todo" ]
+                ]
             ]
         ]
