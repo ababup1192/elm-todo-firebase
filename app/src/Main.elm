@@ -35,8 +35,13 @@ init _ =
 ---- UPDATE ----
 
 
+type alias KeyCode =
+    Int
+
+
 type Msg
     = ChangeNewTodoItem String
+    | KeyDownNewTodo KeyCode
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
