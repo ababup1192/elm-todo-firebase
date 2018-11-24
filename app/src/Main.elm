@@ -49,9 +49,18 @@ type Msg
     | KeyDownNewTodo KeyCode
 
 
+enterKeyCode : Int
+enterKeyCode =
+    13
+
+
 updateKeyDownNewTodo : KeyCode -> String -> String
 updateKeyDownNewTodo keyCode content =
-    ""
+    if keyCode == enterKeyCode then
+        ""
+
+    else
+        content
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
