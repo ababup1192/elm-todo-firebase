@@ -80,6 +80,12 @@ suite =
                         todoItemView taskItem
                             |> Query.fromHtml
                             |> Query.has [ Selector.class "completed" ]
+                , test "input.toggleは 'checked' を持っている" <|
+                    \_ ->
+                        todoItemView taskItem
+                            |> Query.fromHtml
+                            |> Query.find [ Selector.tag "input", Selector.class "toggle" ]
+                            |> Query.has [ Selector.checked True ]
                 ]
             ]
         ]
