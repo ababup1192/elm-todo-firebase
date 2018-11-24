@@ -75,7 +75,7 @@ enterKeyCode =
 updateKeyDownNewTodo : KeyCode -> Model -> Model
 updateKeyDownNewTodo keyCode { newTodoContent, taskItemList } =
     if keyCode == enterKeyCode then
-        { newTodoContent = "", taskItemList = taskItemList }
+        { newTodoContent = "", taskItemList = Active newTodoContent :: taskItemList }
 
     else
         { newTodoContent = newTodoContent, taskItemList = taskItemList }
