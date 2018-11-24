@@ -31,8 +31,8 @@ suite =
                         simulatedKeyDownEventObject : Int -> Value
                         simulatedKeyDownEventObject key =
                             Encode.object
-                                [ ( "target"
-                                  , Encode.object [ ( "value", Encode.int key ) ]
+                                [ ( "keyCode"
+                                  , Encode.int key
                                   )
                                 ]
                     in

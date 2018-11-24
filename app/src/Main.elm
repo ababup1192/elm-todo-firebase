@@ -15,7 +15,8 @@ import Html.Attributes
         , type_
         , value
         )
-import Html.Events exposing (onInput)
+import Html.Events exposing (keyCode, on, onInput)
+import Json.Decode as Decode
 
 
 
@@ -100,6 +101,11 @@ view { newTodoContent } =
         ]
 
 
+onKeyDown : (Int -> msg) -> Attribute msg
+onKeyDown tagger =
+    on "keydown" (Decode.map tagger keyCode)
+
+
 todoHeaderView : String -> Html Msg
 todoHeaderView newTodoContent =
     header [ class "header" ]
@@ -110,6 +116,7 @@ todoHeaderView newTodoContent =
             , value newTodoContent
             , autofocus True
             , onInput ChangeNewTodoItem
+            , onKeyDown KeyDownNewTodo
             ]
             []
         ]
