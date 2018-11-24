@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), init, main, update, view)
+module Main exposing (Msg(..), todoHeaderView)
 
 import Browser
 import Html exposing (..)
@@ -35,7 +35,7 @@ init _ =
 
 
 type Msg
-    = NoOp
+    = ChangeNewTodoItem String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -50,10 +50,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     section [ class "todoapp" ]
-        [ header [ class "header" ]
-            [ h1 [] [ text "todos" ]
-            , input [ class "new-todo", placeholder "What needs to be done?", autofocus True ] []
-            ]
+        [ todoHeaderView
         , section [ class "main" ]
             [ input [ id "toggle-all", class "toggle-all", type_ "checkbox" ] []
             , label [ for "togglea-ll" ] [ text "Mark all as complete" ]
@@ -94,6 +91,14 @@ view model =
                 ]
             , button [ class "clear-completed" ] [ text "Clear completed" ]
             ]
+        ]
+
+
+todoHeaderView : Html Msg
+todoHeaderView =
+    header [ class "header" ]
+        [ h1 [] [ text "todos" ]
+        , input [ class "new-todo", placeholder "What needs to be done?", autofocus True ] []
         ]
 
 

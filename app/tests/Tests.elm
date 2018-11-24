@@ -2,35 +2,24 @@ module Tests exposing (suite)
 
 import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int, list, string)
+import Main exposing (..)
 import Test exposing (..)
+import Test.Html.Event as Event
+import Test.Html.Query as Query
+import Test.Html.Selector as Selector
 
 
 suite : Test
 suite =
-    describe "The String module"
-        [ describe "String.reverse"
+    describe "The Main module"
+        [ describe "todoHeaderView"
             -- Nest as many descriptions as you like.
-            [ test "has no effect on a palindrome" <|
+            [ test "TODOアイテム内容の入力をおこなっているとき、ChangeNewTodoItem Msgが発行されている" <|
                 \_ ->
-                    let
-                        palindrome =
-                            "hannah"
-                    in
-                    Expect.equal palindrome (String.reverse palindrome)
-
-            -- Expect.equal is designed to be used in pipeline style, like this.
-            , test "reverses a known string" <|
-                \_ ->
-                    "ABCDEFG"
-                        |> String.reverse
-                        |> Expect.equal "GFEDCBA"
-
-            -- fuzz runs the test 100 times with randomly-generated inputs!
-            , fuzz string "restores the original string if you run it again" <|
-                \randomlyGeneratedString ->
-                    randomlyGeneratedString
-                        |> String.reverse
-                        |> String.reverse
-                        |> Expect.equal randomlyGeneratedString
+                    todoHeaderView
+                        |> Query.fromHtml
+                        |> Query.find [ Selector.tag "input" ]
+                        |> Event.simulate (Event.input "new todo")
+                        |> Event.expect (ChangeNewTodoItem "new todo")
             ]
         ]
