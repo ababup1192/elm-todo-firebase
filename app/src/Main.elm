@@ -1,8 +1,10 @@
 module Main exposing
     ( KeyCode
     , Msg(..)
+    , TaskItem
     , enterKeyCode
     , todoHeaderView
+    , todoItemView
     , updateKeyDownNewTodo
     )
 
@@ -144,6 +146,22 @@ todoHeaderView newTodoContent =
             , onKeyDown KeyDownNewTodo
             ]
             []
+        ]
+
+
+type alias TaskItem =
+    { isCompleted : Bool, content : String }
+
+
+todoItemView : TaskItem -> Html Msg
+todoItemView { isCompleted, content } =
+    li [ class "" ]
+        [ div [ class "view" ]
+            [ input [ class "toggle", type_ "checkbox", checked False ] []
+            , label [] [ text "" ]
+            , button [ class "destroy" ] []
+            ]
+        , input [ class "edit", value "" ] []
         ]
 
 
