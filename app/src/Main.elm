@@ -158,7 +158,7 @@ todoItemView { isCompleted, content } =
     li [ class "completed" ]
         [ div [ class "view" ]
             [ input [ class "toggle", type_ "checkbox" ] []
-            , label [] [ text "" ]
+            , label [] [ text content ]
             , button [ class "destroy" ] []
             ]
         , input [ class "edit", value "" ] []
