@@ -70,14 +70,16 @@ suite =
                 "abc"
             ]
         , describe "todoItemView" <|
-            let
-                taskItem =
-                    TaskItem False "new todo"
-            in
-            [ test "完了していない 'new todo' タスクがあるとき、 liは 'completed' class を持っている" <|
-                \_ ->
-                    todoItemView taskItem
-                        |> Query.fromHtml
-                        |> Query.has [ Selector.class "completed" ]
+            [ describe "完了していない 'new todo' タスクがあるとき" <|
+                let
+                    taskItem =
+                        TaskItem False "new todo"
+                in
+                [ test "liは 'completed' class を持っている" <|
+                    \_ ->
+                        todoItemView taskItem
+                            |> Query.fromHtml
+                            |> Query.has [ Selector.class "completed" ]
+                ]
             ]
         ]
