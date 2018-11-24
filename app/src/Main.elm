@@ -45,10 +45,7 @@ type alias Model =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( { newTodoContent = ""
-      , taskItemList =
-            [ Active "Buy a unicorn"
-            , Complete "Taste JavaScript"
-            ]
+      , taskItemList = []
       }
     , Cmd.none
     )
@@ -101,7 +98,6 @@ view { taskItemList, newTodoContent } =
         [ todoHeaderView newTodoContent
         , section [ class "main" ]
             [ input [ id "toggle-all", class "toggle-all", type_ "checkbox" ] []
-            , label [ for "togglea-ll" ] [ text "Mark all as complete" ]
             , todoItemListView taskItemList
             ]
         , footer [ class "footer" ]

@@ -44,6 +44,22 @@ public class BasicStepDefs {
         newTodoInput.sendKeys(Keys.ENTER);
     }
 
+    @Then("^TODOリストは空である$")
+    public void TODOリストは空である() throws Throwable {
+        final List<WebElement> todoList = driver.findElements(By.cssSelector("ul.todo-list > li"));
+
+        assertEquals(0, todoList.size());
+        driver.quit();
+    }
+
+    @Then("^フッターは空である$")
+    public void フッターは空である() throws Throwable {
+        final WebElement footer = driver.findElement(By.cssSelector("footer.footer"));
+
+        assertEquals(0, footer.findElements(By.xpath(".//*")).size());
+        driver.quit();
+    }
+
     @Then("^入力フォームから入力内容は消える$")
     public void 入力フォームから入力内容は消える() throws Throwable {
         final WebElement newTodoInput = driver.switchTo().activeElement();
