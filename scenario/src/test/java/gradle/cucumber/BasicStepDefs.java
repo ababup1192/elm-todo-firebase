@@ -65,7 +65,7 @@ public class BasicStepDefs {
         final String actual =
                 "li-class=\"" + lastListItem.getAttribute("class") + "\", " +
                         "input-checked=" + itemCheckbox.getAttribute("checked") + ", " +
-                        "label-test=\"" + itemLabel.getText() + "\"";
+                        "label-text=\"" + itemLabel.getText() + "\"";
 
         Thread.sleep(1000);
 
