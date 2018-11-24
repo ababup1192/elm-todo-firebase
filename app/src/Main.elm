@@ -15,6 +15,7 @@ import Html.Attributes
         , type_
         , value
         )
+import Html.Events exposing (onInput)
 
 
 
@@ -98,7 +99,13 @@ todoHeaderView : Html Msg
 todoHeaderView =
     header [ class "header" ]
         [ h1 [] [ text "todos" ]
-        , input [ class "new-todo", placeholder "What needs to be done?", autofocus True ] []
+        , input
+            [ class "new-todo"
+            , placeholder "What needs to be done?"
+            , autofocus True
+            , onInput ChangeNewTodoItem
+            ]
+            []
         ]
 
 
