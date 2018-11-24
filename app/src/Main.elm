@@ -1,5 +1,6 @@
 module Main exposing
     ( KeyCode
+    , Model
     , Msg(..)
     , TaskItem(..)
     , enterKeyCode
@@ -71,13 +72,13 @@ enterKeyCode =
     13
 
 
-updateKeyDownNewTodo : KeyCode -> String -> String
-updateKeyDownNewTodo keyCode content =
+updateKeyDownNewTodo : KeyCode -> Model -> Model
+updateKeyDownNewTodo keyCode { newTodoContent, taskItemList } =
     if keyCode == enterKeyCode then
-        ""
+        { newTodoContent = "", taskItemList = taskItemList }
 
     else
-        content
+        { newTodoContent = newTodoContent, taskItemList = taskItemList }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -87,7 +88,7 @@ update msg ({ newTodoContent } as model) =
             ( { model | newTodoContent = content }, Cmd.none )
 
         KeyDownNewTodo keyCode ->
-            ( { model | newTodoContent = updateKeyDownNewTodo keyCode newTodoContent }, Cmd.none )
+            ( updateKeyDownNewTodo keyCode model, Cmd.none )
 
 
 
@@ -95,30 +96,13 @@ update msg ({ newTodoContent } as model) =
 
 
 view : Model -> Html Msg
-view { newTodoContent } =
+view { taskItemList, newTodoContent } =
     section [ class "todoapp" ]
         [ todoHeaderView newTodoContent
         , section [ class "main" ]
             [ input [ id "toggle-all", class "toggle-all", type_ "checkbox" ] []
             , label [ for "togglea-ll" ] [ text "Mark all as complete" ]
-            , ul [ class "todo-list" ]
-                [ li [ class "completed" ]
-                    [ div [ class "view" ]
-                        [ input [ class "toggle", type_ "checkbox", checked True ] []
-                        , label [] [ text "Taste JavaScript" ]
-                        , button [ class "destroy" ] []
-                        ]
-                    , input [ class "edit", value "Create a TodoMVC template" ] []
-                    ]
-                , li [ class "" ]
-                    [ div [ class "view" ]
-                        [ input [ class "toggle", type_ "checkbox" ] []
-                        , label [] [ text "Buy a unicorn" ]
-                        , button [ class "destroy" ] []
-                        ]
-                    , input [ class "edit", value "Rule the web" ] []
-                    ]
-                ]
+            , todoItemListView taskItemList
             ]
         , footer [ class "footer" ]
             [ span [ class "todo-count" ]

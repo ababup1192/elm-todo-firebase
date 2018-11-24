@@ -14,16 +14,16 @@ type alias TestCase =
     String
 
 
-updateKeyDownNewTodoTest : TestCase -> KeyCode -> String -> String -> Test
-updateKeyDownNewTodoTest testCase keyCode content newContent =
+updateKeyDownNewTodoTest : TestCase -> KeyCode -> Model -> Model -> Test
+updateKeyDownNewTodoTest testCase keyCode model newModel =
     test testCase <|
         \_ ->
             let
                 actual =
-                    updateKeyDownNewTodo keyCode content
+                    updateKeyDownNewTodo keyCode model
 
                 expected =
-                    newContent
+                    newModel
             in
             Expect.equal actual expected
 
@@ -59,15 +59,15 @@ suite =
             ]
         , describe "updateKeyDownNewTodo"
             [ updateKeyDownNewTodoTest
-                "押されたキーがエンターキーだったとき、TODOアイテムの内容は空になる"
+                "押されたキーがエンターキーだったとき、TODOアイテムの内容は空になり、Activeなタスクとしてリストの先頭に追加される"
                 enterKeyCode
-                "abc"
-                ""
+                (Model "abc" [ Complete "def" ])
+                (Model "" [ Active "abc", Complete "def" ])
             , updateKeyDownNewTodoTest
                 "押されたキーがエンターキーではなかったとき、TODOアイテムの内容はそのまま"
                 12
-                "abc"
-                "abc"
+                (Model "abc" [])
+                (Model "abc" [])
             ]
         , describe "todoItemView" <|
             [ describe "完了していない 'new todo' タスクがあるとき" <|
