@@ -155,9 +155,24 @@ type alias TaskItem =
 
 todoItemView : TaskItem -> Html Msg
 todoItemView { isCompleted, content } =
-    li [ class "completed" ]
+    let
+        liClass =
+            if isCompleted then
+                "completed"
+
+            else
+                ""
+
+        toggleAttributes =
+            if isCompleted then
+                [ class "toggle", type_ "checkbox", checked True ]
+
+            else
+                [ class "toggle", type_ "checkbox" ]
+    in
+    li [ class liClass ]
         [ div [ class "view" ]
-            [ input [ class "toggle", type_ "checkbox" ] []
+            [ input toggleAttributes []
             , label [] [ text content ]
             , button [ class "destroy" ] []
             ]
