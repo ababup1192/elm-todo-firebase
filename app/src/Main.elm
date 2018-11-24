@@ -23,12 +23,12 @@ import Html.Events exposing (onInput)
 
 
 type alias Model =
-    {}
+    { newTodoContent : String }
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( {}, Cmd.none )
+    ( { newTodoContent = "" }, Cmd.none )
 
 
 
@@ -49,9 +49,9 @@ update msg model =
 
 
 view : Model -> Html Msg
-view model =
+view { newTodoContent } =
     section [ class "todoapp" ]
-        [ todoHeaderView
+        [ todoHeaderView newTodoContent
         , section [ class "main" ]
             [ input [ id "toggle-all", class "toggle-all", type_ "checkbox" ] []
             , label [ for "togglea-ll" ] [ text "Mark all as complete" ]
@@ -95,13 +95,14 @@ view model =
         ]
 
 
-todoHeaderView : Html Msg
-todoHeaderView =
+todoHeaderView : String -> Html Msg
+todoHeaderView newTodoContent =
     header [ class "header" ]
         [ h1 [] [ text "todos" ]
         , input
             [ class "new-todo"
             , placeholder "What needs to be done?"
+            , value newTodoContent
             , autofocus True
             , onInput ChangeNewTodoItem
             ]

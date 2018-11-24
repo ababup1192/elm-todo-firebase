@@ -16,7 +16,7 @@ suite =
             -- Nest as many descriptions as you like.
             [ test "TODOアイテム内容の入力をおこなっているとき、ChangeNewTodoItem Msgが発行されている" <|
                 \_ ->
-                    todoHeaderView
+                    todoHeaderView ""
                         |> Query.fromHtml
                         |> Query.find [ Selector.tag "input" ]
                         |> Event.simulate (Event.input "new todo")
