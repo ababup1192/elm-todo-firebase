@@ -10,6 +10,24 @@ import Test.Html.Query as Query
 import Test.Html.Selector as Selector
 
 
+type alias TestCase =
+    String
+
+
+updateKeyDownNewTodoTest : TestCase -> KeyCode -> String -> String -> Test
+updateKeyDownNewTodoTest testCase keyCode content newContent =
+    test testCase <|
+        \_ ->
+            let
+                actual =
+                    updateKeyDownNewTodo keyCode content
+
+                expected =
+                    newContent
+            in
+            Expect.equal actual expected
+
+
 suite : Test
 suite =
     describe "The Main module"
@@ -25,9 +43,6 @@ suite =
             , test "TODOアイテム内容の入力時にエンターキー(KeyDownイベント時)を押したとき、KeyDownNewTodo Msgが発行される" <|
                 \_ ->
                     let
-                        enterKey =
-                            13
-
                         simulatedKeyDownEventObject : Int -> Value
                         simulatedKeyDownEventObject key =
                             Encode.object
@@ -39,35 +54,19 @@ suite =
                     todoHeaderView ""
                         |> Query.fromHtml
                         |> Query.find [ Selector.tag "input" ]
-                        |> Event.simulate (Event.custom "keydown" <| simulatedKeyDownEventObject enterKey)
-                        |> Event.expect (KeyDownNewTodo enterKey)
+                        |> Event.simulate (Event.custom "keydown" <| simulatedKeyDownEventObject enterKeyCode)
+                        |> Event.expect (KeyDownNewTodo enterKeyCode)
             ]
         , describe "updateKeyDownNewTodo"
-            [ test "押されたキーがエンターキーだったとき、TODOアイテムの内容は空になる" <|
-                \_ ->
-                    let
-                        enterKey =
-                            13
-
-                        actual =
-                            updateKeyDownNewTodo enterKey "abc"
-
-                        expected =
-                            ""
-                    in
-                    Expect.equal actual expected
-            , test "押されたキーがエンターキーではなかったとき、TODOアイテムの内容はそのまま" <|
-                \_ ->
-                    let
-                        anotherKey =
-                            12
-
-                        actual =
-                            updateKeyDownNewTodo anotherKey "abc"
-
-                        expected =
-                            "abc"
-                    in
-                    Expect.equal actual expected
+            [ updateKeyDownNewTodoTest
+                "押されたキーがエンターキーだったとき、TODOアイテムの内容は空になる"
+                enterKeyCode
+                "abc"
+                ""
+            , updateKeyDownNewTodoTest
+                "押されたキーがエンターキーではなかったとき、TODOアイテムの内容はそのまま"
+                12
+                "abc"
+                "abc"
             ]
         ]

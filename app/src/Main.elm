@@ -1,5 +1,7 @@
 module Main exposing
-    ( Msg(..)
+    ( KeyCode
+    , Msg(..)
+    , enterKeyCode
     , todoHeaderView
     , updateKeyDownNewTodo
     )
