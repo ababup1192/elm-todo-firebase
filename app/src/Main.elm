@@ -155,7 +155,7 @@ type alias TaskItem =
 
 todoItemView : TaskItem -> Html Msg
 todoItemView { isCompleted, content } =
-    li [ class "" ]
+    li [ class "completed" ]
         [ div [ class "view" ]
             [ input [ class "toggle", type_ "checkbox", checked False ] []
             , label [] [ text "" ]

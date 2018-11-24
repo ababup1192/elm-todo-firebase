@@ -78,7 +78,6 @@ suite =
                 \_ ->
                     todoItemView taskItem
                         |> Query.fromHtml
-                        |> Query.find [ Selector.tag "li" ]
                         |> Query.has [ Selector.class "completed" ]
             ]
         ]
