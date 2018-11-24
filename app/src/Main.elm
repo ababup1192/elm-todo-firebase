@@ -1,9 +1,10 @@
 module Main exposing
     ( KeyCode
     , Msg(..)
-    , TaskItem
+    , TaskItem(..)
     , enterKeyCode
     , todoHeaderView
+    , todoItemListView
     , todoItemView
     , updateKeyDownNewTodo
     )
@@ -31,13 +32,25 @@ import Json.Decode as Decode
 ---- MODEL ----
 
 
+type TaskItem
+    = Active String
+    | Complete String
+
+
 type alias Model =
-    { newTodoContent : String }
+    { newTodoContent : String, taskItemList : List TaskItem }
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { newTodoContent = "" }, Cmd.none )
+    ( { newTodoContent = ""
+      , taskItemList =
+            [ Active "Buy a unicorn"
+            , Complete "Taste JavaScript"
+            ]
+      }
+    , Cmd.none
+    )
 
 
 
@@ -149,26 +162,22 @@ todoHeaderView newTodoContent =
         ]
 
 
-type alias TaskItem =
-    { isCompleted : Bool, content : String }
-
-
 todoItemView : TaskItem -> Html Msg
-todoItemView { isCompleted, content } =
+todoItemView taskItem =
     let
-        liClass =
-            if isCompleted then
-                "completed"
+        { liClass, toggleAttributes, content } =
+            case taskItem of
+                Active c ->
+                    { liClass = ""
+                    , toggleAttributes = [ class "toggle", type_ "checkbox" ]
+                    , content = c
+                    }
 
-            else
-                ""
-
-        toggleAttributes =
-            if isCompleted then
-                [ class "toggle", type_ "checkbox", checked True ]
-
-            else
-                [ class "toggle", type_ "checkbox" ]
+                Complete c ->
+                    { liClass = "completed"
+                    , toggleAttributes = [ class "toggle", type_ "checkbox", checked True ]
+                    , content = c
+                    }
     in
     li [ class liClass ]
         [ div [ class "view" ]
@@ -178,6 +187,12 @@ todoItemView { isCompleted, content } =
             ]
         , input [ class "edit", value "" ] []
         ]
+
+
+todoItemListView : List TaskItem -> Html Msg
+todoItemListView taskItemList =
+    ul [ class "todo-list" ] <|
+        []
 
 
 subscriptions : Model -> Sub Msg

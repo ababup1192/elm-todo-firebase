@@ -73,7 +73,7 @@ suite =
             [ describe "完了していない 'new todo' タスクがあるとき" <|
                 let
                     taskItem =
-                        TaskItem False "new todo"
+                        Active "new todo"
                 in
                 [ test "liは 'completed' class を持たない" <|
                     \_ ->
@@ -96,7 +96,7 @@ suite =
             , describe "完了している 'old todo' タスクがあるとき" <|
                 let
                     taskItem =
-                        TaskItem True "old todo"
+                        Complete "old todo"
                 in
                 [ test "liは 'completed' class を持つ" <|
                     \_ ->
@@ -115,6 +115,39 @@ suite =
                             |> Query.fromHtml
                             |> Query.find [ Selector.tag "label" ]
                             |> Query.has [ Selector.text "old todo" ]
+                ]
+            ]
+        , describe "todoItemListView" <|
+            [ describe "タスクアイテムが複数ある時" <|
+                let
+                    taskItemList =
+                        [ Active "Buy a unicorn"
+                        , Complete "Taste JavaScript"
+                        ]
+
+                    taskItemListHtml =
+                        todoItemListView taskItemList
+                            |> Query.fromHtml
+                            |> Query.findAll [ Selector.tag "li" ]
+
+                    firstTaskLabel =
+                        taskItemListHtml
+                            |> Query.index 0
+                            |> Query.find [ Selector.tag "label" ]
+
+                    secondTaskLabel =
+                        taskItemListHtml
+                            |> Query.index 0
+                            |> Query.find [ Selector.tag "label" ]
+                in
+                [ test "最初に表示されるアイテムは、'Teste JavaScript' である" <|
+                    \_ ->
+                        firstTaskLabel
+                            |> Query.has [ Selector.text "Taste JavaScript" ]
+                , test "２番目に表示されるアイテムは、'Buy a unicorn' である" <|
+                    \_ ->
+                        secondTaskLabel
+                            |> Query.has [ Selector.text "Buy a unicorn" ]
                 ]
             ]
         ]
