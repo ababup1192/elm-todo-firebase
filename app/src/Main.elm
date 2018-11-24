@@ -1,4 +1,8 @@
-module Main exposing (Msg(..), todoHeaderView)
+module Main exposing
+    ( Msg(..)
+    , todoHeaderView
+    , updateKeyDownNewTodo
+    )
 
 import Browser
 import Html exposing (..)
@@ -45,9 +49,19 @@ type Msg
     | KeyDownNewTodo KeyCode
 
 
+updateKeyDownNewTodo : KeyCode -> String -> String
+updateKeyDownNewTodo keyCode content =
+    ""
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    ( model, Cmd.none )
+update msg ({ newTodoContent } as model) =
+    case msg of
+        ChangeNewTodoItem content ->
+            ( { model | newTodoContent = content }, Cmd.none )
+
+        KeyDownNewTodo keyCode ->
+            ( { model | newTodoContent = updateKeyDownNewTodo keyCode newTodoContent }, Cmd.none )
 
 
 

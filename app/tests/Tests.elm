@@ -42,4 +42,32 @@ suite =
                         |> Event.simulate (Event.custom "keydown" <| simulatedKeyDownEventObject enterKey)
                         |> Event.expect (KeyDownNewTodo enterKey)
             ]
+        , describe "updateKeyDownNewTodo"
+            [ test "押されたキーがエンターキーだったとき、TODOアイテムの内容は空になる" <|
+                \_ ->
+                    let
+                        enterKey =
+                            13
+
+                        actual =
+                            updateKeyDownNewTodo enterKey "abc"
+
+                        expected =
+                            ""
+                    in
+                    Expect.equal actual expected
+            , test "押されたキーがエンターキーではなかったとき、TODOアイテムの内容はそのまま" <|
+                \_ ->
+                    let
+                        anotherKey =
+                            12
+
+                        actual =
+                            updateKeyDownNewTodo anotherKey "abc"
+
+                        expected =
+                            "abc"
+                    in
+                    Expect.equal actual expected
+            ]
         ]
