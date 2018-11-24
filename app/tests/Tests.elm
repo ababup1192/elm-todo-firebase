@@ -14,7 +14,7 @@ suite =
     describe "The Main module"
         [ describe "todoHeaderView"
             -- Nest as many descriptions as you like.
-            [ test "TODOアイテム内容の入力をおこなっているとき、ChangeNewTodoItem Msgが発行されている" <|
+            [ test "TODOアイテム内容の入力をおこなったとき、ChangeNewTodoItem Msgが発行される" <|
                 \_ ->
                     todoHeaderView ""
                         |> Query.fromHtml
