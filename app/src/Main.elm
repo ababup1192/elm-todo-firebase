@@ -23,6 +23,7 @@ import Html.Attributes
         , id
         , placeholder
         , src
+        , style
         , type_
         , value
         )
@@ -161,29 +162,32 @@ todoItemListView taskItemList =
 
 footerView : List TaskItem -> Html Msg
 footerView taskItemList =
-    footer [ class "footer" ]
-        (if List.isEmpty taskItemList then
-            []
+    let
+        footerAttrs =
+            if List.isEmpty taskItemList then
+                [ class "footer", style "display" "none" ]
 
-         else
-            [ span [ class "todo-count" ]
-                [ strong [] [ text "0" ]
-                , text " item left"
-                ]
-            , ul [ class "filters" ]
-                [ li []
-                    [ a [ class "selected", href "#/" ] [ text "All" ]
-                    ]
-                , li []
-                    [ a [ href "#/active" ] [ text "Active" ]
-                    ]
-                , li []
-                    [ a [ href "#/completed" ] [ text "Completed" ]
-                    ]
-                ]
-            , button [ class "clear-completed" ] [ text "Clear completed" ]
+            else
+                [ class "footer" ]
+    in
+    footer footerAttrs
+        [ span [ class "todo-count" ]
+            [ strong [] [ text "0" ]
+            , text " item left"
             ]
-        )
+        , ul [ class "filters" ]
+            [ li []
+                [ a [ class "selected", href "#/" ] [ text "All" ]
+                ]
+            , li []
+                [ a [ href "#/active" ] [ text "Active" ]
+                ]
+            , li []
+                [ a [ href "#/completed" ] [ text "Completed" ]
+                ]
+            ]
+        , button [ class "clear-completed" ] [ text "Clear completed" ]
+        ]
 
 
 subscriptions : Model -> Sub Msg
