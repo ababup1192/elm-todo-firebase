@@ -4,6 +4,7 @@ module Main exposing
     , Msg(..)
     , TaskItem(..)
     , enterKeyCode
+    , footerView
     , todoHeaderView
     , todoItemListView
     , todoItemView
@@ -100,24 +101,7 @@ view { taskItemList, newTodoContent } =
             [ input [ id "toggle-all", class "toggle-all", type_ "checkbox" ] []
             , todoItemListView taskItemList
             ]
-        , footer [ class "footer" ]
-            [ span [ class "todo-count" ]
-                [ strong [] [ text "0" ]
-                , text " item left"
-                ]
-            , ul [ class "filters" ]
-                [ li []
-                    [ a [ class "selected", href "#/" ] [ text "All" ]
-                    ]
-                , li []
-                    [ a [ href "#/active" ] [ text "Active" ]
-                    ]
-                , li []
-                    [ a [ href "#/completed" ] [ text "Completed" ]
-                    ]
-                ]
-            , button [ class "clear-completed" ] [ text "Clear completed" ]
-            ]
+        , footerView taskItemList
         ]
 
 
@@ -173,6 +157,28 @@ todoItemListView : List TaskItem -> Html Msg
 todoItemListView taskItemList =
     ul [ class "todo-list" ]
         (taskItemList |> List.reverse |> List.map todoItemView)
+
+
+footerView : List TaskItem -> Html Msg
+footerView taskItemList =
+    footer [ class "footer" ]
+        [ span [ class "todo-count" ]
+            [ strong [] [ text "0" ]
+            , text " item left"
+            ]
+        , ul [ class "filters" ]
+            [ li []
+                [ a [ class "selected", href "#/" ] [ text "All" ]
+                ]
+            , li []
+                [ a [ href "#/active" ] [ text "Active" ]
+                ]
+            , li []
+                [ a [ href "#/completed" ] [ text "Completed" ]
+                ]
+            ]
+        , button [ class "clear-completed" ] [ text "Clear completed" ]
+        ]
 
 
 subscriptions : Model -> Sub Msg

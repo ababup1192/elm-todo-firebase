@@ -75,7 +75,7 @@ suite =
                     taskItem =
                         Active "new todo"
                 in
-                [ test "liは 'completed' class を持たない" <|
+                [ test "<li>は 'completed' class を持たない" <|
                     \_ ->
                         todoItemView taskItem
                             |> Query.fromHtml
@@ -86,7 +86,7 @@ suite =
                             |> Query.fromHtml
                             |> Query.find [ Selector.tag "input", Selector.class "toggle" ]
                             |> Query.hasNot [ Selector.checked True ]
-                , test "labelのTextは 'new todo' を持つ" <|
+                , test "<label>のTextは 'new todo' を持つ" <|
                     \_ ->
                         todoItemView taskItem
                             |> Query.fromHtml
@@ -118,7 +118,7 @@ suite =
                 ]
             ]
         , describe "todoItemListView" <|
-            [ describe "タスクアイテムが複数ある時" <|
+            [ describe "タスクアイテムが複数あるとき" <|
                 let
                     taskItemList =
                         [ Active "Buy a unicorn"
@@ -148,6 +148,19 @@ suite =
                     \_ ->
                         secondTaskLabel
                             |> Query.has [ Selector.text "Buy a unicorn" ]
+                ]
+            ]
+        , describe "footerView" <|
+            [ describe "タスクアイテムが無いとき" <|
+                let
+                    emptyFooterHtml =
+                        footerView []
+                            |> Query.fromHtml
+                in
+                [ test "<footer>は、<span>を持たない" <|
+                    \_ ->
+                        emptyFooterHtml
+                            |> Query.hasNot [ Selector.tag "span" ]
                 ]
             ]
         ]
