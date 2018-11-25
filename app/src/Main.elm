@@ -73,7 +73,7 @@ enterKeyCode =
 
 updateKeyDownNewTodo : KeyCode -> Model -> Model
 updateKeyDownNewTodo keyCode { newTodoContent, taskItemList } =
-    if keyCode == enterKeyCode then
+    if keyCode == enterKeyCode && not (String.isEmpty newTodoContent) then
         { newTodoContent = "", taskItemList = Active newTodoContent :: taskItemList }
 
     else
