@@ -73,6 +73,11 @@ suite =
                 enterKeyCode
                 (Model "" [])
                 (Model "" [])
+            , updateKeyDownNewTodoTest
+                "TODOアイテムの内容が空白かつ、押されたキーがエンターキーだったとき、タスクリストは変わらない"
+                enterKeyCode
+                (Model " " [])
+                (Model " " [])
             ]
         , describe "todoItemView" <|
             [ describe "完了していない 'new todo' タスクがあるとき" <|
