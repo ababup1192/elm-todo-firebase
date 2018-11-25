@@ -21,7 +21,7 @@ public class BasicStepDefs {
 
     WebDriver driver = null;
 
-    @Given("^TODO アプリを開き$")
+    @Given("^TODO アプリを開く$")
     public void TODO_アプリを開き() throws Throwable {
         System.setProperty("webdriver.chrome.driver", "Driver/chromedriver");
         driver = new ChromeDriver();
@@ -35,7 +35,7 @@ public class BasicStepDefs {
         newTodoInput.sendKeys(newTodoContent);
     }
 
-    @When("^エンターキーを押すと$")
+    @When("^エンターキーを押し$")
     public void エンターキーを押すと() throws Throwable {
         final WebElement newTodoInput = driver.switchTo().activeElement();
 
@@ -44,7 +44,16 @@ public class BasicStepDefs {
         newTodoInput.sendKeys(Keys.ENTER);
     }
 
-    @Then("^TODOリストは空である$")
+    @When("^新しく追加されたタスクアイテムにチェックを入れる$")
+    public void 新しく追加されたタスクアイテムにチェックを入れる() throws Throwable {
+        final List<WebElement> todoList = driver.findElements(By.cssSelector("ul.todo-list > li"));
+        final WebElement lastListItem = todoList.get(todoList.size() - 1);
+        final WebElement toggle = lastListItem.findElement(By.tagName("input"));
+
+        toggle.click();
+    }
+
+    @Then("^すると、TODOリストは空である$")
     public void TODOリストは空である() throws Throwable {
         final List<WebElement> todoList = driver.findElements(By.cssSelector("ul.todo-list > li"));
 
@@ -60,7 +69,7 @@ public class BasicStepDefs {
         driver.quit();
     }
 
-    @Then("^入力フォームから入力内容は消える$")
+    @Then("^すると、入力フォームから入力内容は消える$")
     public void 入力フォームから入力内容は消える() throws Throwable {
         final WebElement newTodoInput = driver.switchTo().activeElement();
 
@@ -70,7 +79,7 @@ public class BasicStepDefs {
         driver.quit();
     }
 
-    @Then("^TODOリストの最後に、内容が\"([^\"]*)\"のActiveなタスクが追加される$")
+    @Then("^すると、TODOリストの最後に、内容が\"([^\"]*)\"のActiveなタスクが追加される$")
     public void TODOリストの最後に_内容が_のActiveなタスクが追加される(String newTodoContent) throws Throwable {
         final List<WebElement> todoList = driver.findElements(By.cssSelector("ul.todo-list > li"));
         final WebElement lastListItem = todoList.get(todoList.size() - 1);
@@ -88,4 +97,25 @@ public class BasicStepDefs {
         assertEquals(expected, actual);
         driver.quit();
     }
+
+    @Then("^すると、TODOリストの最後に、内容が\"([^\"]*)\"のまま、取り消し線が入る$")
+    public void すると_TODOリストの最後に_内容が_のまま_取り消し線が入る(String newTodoContent) throws Throwable {
+        final List<WebElement> todoList = driver.findElements(By.cssSelector("ul.todo-list > li"));
+        final WebElement lastListItem = todoList.get(todoList.size() - 1);
+        final WebElement itemCheckbox = lastListItem.findElement(By.tagName("input"));
+        final WebElement itemLabel = lastListItem.findElement(By.tagName("label"));
+
+        final String expected = "li-class=\"completed\", input-checked=true, label-text=\"" + newTodoContent + "\"";
+        final String actual =
+                "li-class=\"" + lastListItem.getAttribute("class") + "\", " +
+                        "input-checked=" + itemCheckbox.getAttribute("checked") + ", " +
+                        "label-text=\"" + itemLabel.getText() + "\"";
+
+        Thread.sleep(1000);
+
+        assertEquals(expected, actual);
+        driver.quit();
+    }
+
+
 }
