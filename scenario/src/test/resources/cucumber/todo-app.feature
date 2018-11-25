@@ -20,4 +20,10 @@ Feature: TODOアプリ
     And エンターキーを押すと
     Then TODOリストの最後に、内容が"new todo"のActiveなタスクが追加される
 
+  Scenario: TODOアイテムの入力フォームが空だったとき、Submit時にTODOリストには追加されない。
+    Given TODO アプリを開き
+    Then エンターキーを押すと
+    Then TODOリストは空である
+
+
 
