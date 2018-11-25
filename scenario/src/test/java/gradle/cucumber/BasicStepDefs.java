@@ -56,7 +56,7 @@ public class BasicStepDefs {
     public void フッターは空である() throws Throwable {
         final WebElement footer = driver.findElement(By.cssSelector("footer.footer"));
 
-        assertEquals(0, footer.findElements(By.xpath(".//*")).size());
+        assertTrue(!footer.isDisplayed());
         driver.quit();
     }
 

@@ -152,23 +152,11 @@ suite =
             ]
         , describe "footerView" <|
             [ describe "タスクアイテムが無いとき" <|
-                let
-                    emptyFooterHtml =
+                [ test "<footer>は、非表示である" <|
+                    \_ ->
                         footerView []
                             |> Query.fromHtml
-                in
-                [ test "<footer>は、<span>を持たない" <|
-                    \_ ->
-                        emptyFooterHtml
-                            |> Query.hasNot [ Selector.tag "span" ]
-                , test "<footer>は、<ul>を持たない" <|
-                    \_ ->
-                        emptyFooterHtml
-                            |> Query.hasNot [ Selector.tag "ul" ]
-                , test "<footer>は、<button>を持たない" <|
-                    \_ ->
-                        emptyFooterHtml
-                            |> Query.hasNot [ Selector.tag "button" ]
+                            |> Query.has [ Selector.style "display" "none" ]
                 ]
             ]
         ]
