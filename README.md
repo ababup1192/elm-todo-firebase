@@ -1,16 +1,16 @@
-# Elm TodoMVC Firebase
+# Elm Todo List Firebase
 
-[デモ](https://ababup1192.github.io/elm-form-validator-sample/)
+[デモ]()
 
 ## Scenario
 
-[Cucumber Scenario]()
+[Cucumber Scenario](./scenario/src/test/resources/cucumber/todo-app.feature)
 
 cucumber gif
 
 ## Unit Test
 
-[Elm Tests]()
+[Elm Tests](./app/tests/Tests.elm)
 
 
 ## README
