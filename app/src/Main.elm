@@ -164,11 +164,13 @@ footerView : List TaskItem -> Html Msg
 footerView taskItemList =
     let
         footerAttrs =
-            if List.isEmpty taskItemList then
-                [ class "footer", style "display" "none" ]
+            class "footer"
+                :: (if List.isEmpty taskItemList then
+                        [ style "display" "none" ]
 
-            else
-                [ class "footer" ]
+                    else
+                        []
+                   )
     in
     footer footerAttrs
         [ span [ class "todo-count" ]
