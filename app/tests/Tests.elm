@@ -161,6 +161,14 @@ suite =
                     \_ ->
                         emptyFooterHtml
                             |> Query.hasNot [ Selector.tag "span" ]
+                , test "<footer>は、<ul>を持たない" <|
+                    \_ ->
+                        emptyFooterHtml
+                            |> Query.hasNot [ Selector.tag "ul" ]
+                , test "<footer>は、<button>を持たない" <|
+                    \_ ->
+                        emptyFooterHtml
+                            |> Query.hasNot [ Selector.tag "button" ]
                 ]
             ]
         ]
