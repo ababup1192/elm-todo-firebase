@@ -169,4 +169,13 @@ suite =
                             |> Query.has [ Selector.style "display" "none" ]
                 ]
             ]
+        , describe "todoItemListView.check" <|
+            [ test "Idが1であるActiveなタスクをチェックしたら、Idが1で完了していない(Active)タスクがCheckされたと言うMsgが発行される" <|
+                \_ ->
+                    todoItemView (Active "Foo")
+                        |> Query.fromHtml
+                        |> Query.find [ Selector.class "input" ]
+                        |> Event.simulate (Event.check True)
+                        |> Event.expect (Check 1 True)
+            ]
         ]

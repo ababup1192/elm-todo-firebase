@@ -61,9 +61,14 @@ type alias KeyCode =
     Int
 
 
+type alias Id =
+    Int
+
+
 type Msg
     = ChangeNewTodoItem String
     | KeyDownNewTodo KeyCode
+    | Check Id Bool
 
 
 enterKeyCode : Int
@@ -92,6 +97,9 @@ update msg ({ newTodoContent } as model) =
 
         KeyDownNewTodo keyCode ->
             ( updateKeyDownNewTodo keyCode model, Cmd.none )
+
+        Check id isCompleted ->
+            ( model, Cmd.none )
 
 
 
